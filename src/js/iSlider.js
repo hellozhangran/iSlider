@@ -320,6 +320,7 @@
     iSlider.plugins = {};
 
     /**
+     * 注册插件
      * @param name
      * @param plugin
      * @public
@@ -329,6 +330,7 @@
     };
 
     /**
+     * 给需要兼容的属性添加webkit前缀
      * @param {String} prop
      * @param {String} value
      * @returns {String}
