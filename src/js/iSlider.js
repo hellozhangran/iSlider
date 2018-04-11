@@ -16,6 +16,7 @@
      * noop function
      */
     function noop() {
+        
     }
 
     /**
@@ -96,9 +97,9 @@
             return obj instanceof HTMLElement;
         }
         catch (e) {
-            return (typeof obj === "object") &&
-                (obj.nodeType === 1) && (typeof obj.style === "object") &&
-                (typeof obj.ownerDocument === "object");
+            return (typeof obj === 'object') &&
+                (obj.nodeType === 1) && (typeof obj.style === 'object') &&
+                (typeof obj.ownerDocument === 'object');
         }
     }
 
@@ -114,6 +115,9 @@
         return Array.prototype.slice.apply(a, Array.prototype.slice.call(arguments, 1));
     }
 
+    /**
+     * convert first letter to upper case
+     */
     function IU(word) {
         return word.replace(/^[a-z]/, function (t) {
             return t.toUpperCase();
@@ -186,7 +190,7 @@
      * version
      * @type {string}
      */
-    iSlider.VERSION = '2.2.2';
+    iSlider.VERSION = '2.2.3';
 
     /**
      * Event white list
@@ -252,6 +256,9 @@
 
     iSlider.BROWSER_PREFIX = null;
 
+    /**
+     * 通过style判断浏览器类型
+     */
     (function () {
         var e = document.createElement('fakeElement');
         [
@@ -719,7 +726,7 @@
         self._damping = (function () {
             return function (distance) {
                 return Math.atan(Math.abs(distance) / self.scale) * 0.62 * (1 - self.dampingForce) * self.scale * (distance > 0 ? 1 : -1);
-            }
+            };
         })();
 
         /**
@@ -1053,7 +1060,7 @@
                 ? this._renderItem(els[i], 1 - i + this.slideIndex)
                 : this._renderItem(els[i], i - 1 + this.slideIndex);
         }
-    }
+    };
 
     /**
      * Preload img when slideChange
@@ -2011,7 +2018,7 @@
             }
         }
         return false;
-    }
+    };
 
     /**
      * Let target islider controls this one

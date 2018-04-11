@@ -55,14 +55,14 @@
 <script type="text/javascript" src="public/js/iSlider.plugin.zoompic.js"></script>
 <script id="show-code">
     var list = [
-        {content: "//be-fe.github.io/static/images/iSlider-card/1.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/2.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/3.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/4.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/5.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/6.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/7.jpg"},
-        {content: "//be-fe.github.io/static/images/iSlider-card/8.jpg"}
+        {content: "http://be-fe.github.io/static/images/iSlider-card/1.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/2.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/3.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/4.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/5.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/6.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/7.jpg"},
+        {content: "http://be-fe.github.io/static/images/iSlider-card/8.jpg"}
     ];
 
     var S = new iSlider({
@@ -71,6 +71,7 @@
         isLooping: 1,
         isOverspread: false,
         animateTime: 800, // ms
+        isAutoplay: true,
         plugins: [['zoompic', {zoomFactor: 3}]]
     });
 </script>
