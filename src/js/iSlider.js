@@ -242,10 +242,10 @@
         unknown: 'unknown',
         empty: 'empty',
         pic: 'pic',
-        dom: 'dom',
-        html: 'html',
-        node: 'node',
-        element: 'element'
+        dom: 'dom', //querySelector取到的dom
+        html: 'html', // HtmlString
+        node: 'node', 
+        element: 'element' // createElement
     };
 
     /**
@@ -346,14 +346,18 @@
     iSlider.styleProp = function (prop, isDP) {
         if (iSlider.BROWSER_PREFIX) {
             if (!!isDP) {
+                // webkitTransform
                 return iSlider.BROWSER_PREFIX + IU(prop);
             } else {
+                // -webkit-transform
                 return '-' + iSlider.BROWSER_PREFIX + '-' + prop;
             }
         } else {
             return prop;
         }
     };
+
+
 
     /**
      * @param {String} prop
@@ -388,10 +392,11 @@
     iSlider._animateFuncs = {
         normal: (function () {
             function normal(dom, axis, scale, i, offset) {
+                // transform: translateZ(0) translateX(360px)
                 iSlider.setStyle(dom, 'transform', 'translateZ(0) translate' + axis + '(' + (offset + scale * (i - 1)) + 'px)');
             }
 
-            normal.effect = iSlider.styleProp('transform');
+            normal.effect = iSlider.styleProp('transform'); // -webkit-transform
             return normal;
         })()
     };
@@ -553,6 +558,7 @@
         self.initIndex = opts.initIndex > 0 && opts.initIndex <= opts.data.length - 1 ? opts.initIndex : 0;
 
         /**
+         * 阻止原生事件
          * touchstart prevent default to fixPage
          * @type {Boolean}
          * @public
@@ -569,6 +575,7 @@
         })();
 
         /**
+         * 修补出现缝隙的问题
          * Fill seam when render
          * Default is false
          * @type {Boolean}
@@ -647,6 +654,7 @@
         self.isLooping = opts.isLooping && self.data.length > 1 ? true : false;
 
         /**
+         * 阻尼力度
          * Damping force
          * Effect in non-looping mode
          * Range 0 ~ 1
@@ -670,6 +678,7 @@
         self.isAutoplay = opts.isAutoplay && self.data.length > 1 ? true : false;
 
         /**
+         * 单位毫秒，当自动播放模式下，如果某些情况导致slide停止了播放，会在该时间后尝试启动播放。
          * When autoplay is enabled.
          * User click/tap behavior(eg: active a link), or if the page loses focus will stop autoplay.
          * This configuration will attempt to restart autoplay after N milliseconds.
@@ -680,6 +689,7 @@
         self.wakeupAutoplayDazetime = opts.wakeupAutoplayDazetime > -1 ? parseInt(opts.wakeupAutoplayDazetime) : -1;
 
         /**
+         * 动画类型，默认是normal, normal是translate平移动画
          * Animate type
          * @type {String}
          * @private
@@ -692,6 +702,7 @@
         self._animateFunc = self._animateFuncs[self.animateType];
 
         /**
+         * 带reverse属性的动画会被存放到_animateReverse数组中
          * @private
          */
         self._animateReverse = (function () {
@@ -704,6 +715,8 @@
             return _;
         })();
 
+
+        // 隐藏的小彩蛋，先忽略
         // little trick set, when you chooce tear & vertical same time
         // iSlider overspread mode will be set true autometicly
         if (self.isVertical && self.animateType === 'card') {
@@ -757,6 +770,7 @@
         self.deviceEvents = iSlider.DEVICE_EVENTS;
 
         /**
+         * 滑动错误范围，默认大于10px才算滑动
          * Finger recognition range, prevent inadvertently touch
          * @type {Number}
          * @private
@@ -774,6 +788,8 @@
         // - Register events
         // --------------------------------
 
+        // 如果有onSlide就取opts.onSlide， 否则取opts.onslide
+        // 取出后以slide为事件名注册
         iSlider.EVENTS.forEach(function (eventName) {
             // TODO callback name of All-Lower-Case will be discarded
             var fn = opts['on' + eventName.replace(/^\w{1}/, function (m) {
@@ -803,7 +819,12 @@
             }
             return config;
         })();
-    };
+
+        // var config = {
+        //     zoompic: {zoomFactor: 3}
+        // }
+
+    }; // setting
 
     /**
      * Init plugins
@@ -974,6 +995,14 @@
             this.fillSeam && this.originScale(el);
         }.bind(this));
     };
+
+    test(){
+        var slideStyles = ['islider-prev', 'islider-active', 'islider-next'];
+        this.els.forEach(function(el, index){
+            removeClass(el, slideStyles.join('|'));
+            
+        })
+    }
 
     /**
      * render list html
@@ -1558,7 +1587,7 @@
     };
 
     /**
-     * Register plugin (run time mode)
+     * Register plugin (run time mode) 放入_plugins
      * @param {String} name
      * @param {Function} plugin
      * @param {...}
@@ -1750,6 +1779,7 @@
      */
     iSliderPrototype.fire = function (eventNames) {
         var args = _A(arguments, 1);
+        // \x20+ 一个或多个空格
         eventNames.split(/\x20+/).forEach(function (eventName) {
             this.log('[EVENT FIRE]:', eventName, args);
             if (eventName in this.events) {
