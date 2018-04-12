@@ -67,6 +67,7 @@
     }
 
     /**
+     * 如cls="zhang|ran|hao"，className中出现三者之一就会被删除
      * @param {HTMLElement} el
      * @param {String} cls
      */
@@ -178,6 +179,8 @@
 
         this._renderWrapper();
         this._initPlugins();
+        
+        // 绑定touch事件，如果关了isTouchable，只绑定resize事件
         this._bindHandler();
 
         this.fire('initialized');
@@ -883,6 +886,7 @@
     };
 
     /**
+     * 渲染item后，给li添加类名islider-type，给li添加子元素
      * render single item html by idx
      * @param {HTMLElement} el ..
      * @param {Number} dataIndex  ..
@@ -984,6 +988,7 @@
     };
 
     /**
+     * 把el上的prev,active,next类名清理掉并根据索引重新设置
      * Apply styles on changed
      * @private
      */
@@ -995,14 +1000,6 @@
             this.fillSeam && this.originScale(el);
         }.bind(this));
     };
-
-    test(){
-        var slideStyles = ['islider-prev', 'islider-active', 'islider-next'];
-        this.els.forEach(function(el, index){
-            removeClass(el, slideStyles.join('|'));
-            
-        })
-    }
 
     /**
      * render list html
@@ -1165,6 +1162,7 @@
     };
 
     /**
+     * 
      * bind all event handler, when on PC, disable drag event
      * @private
      */
@@ -1987,6 +1985,7 @@
     };
 
     /**
+     * 如果设置了fillSeam，重新设置一下dom的transform动画
      * @param {HTMLElement} el
      * @private
      */
